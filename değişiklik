@@ -1,0 +1,50 @@
+dükkanların çalışma saatleri ilgili yerlerde olsun
+HemenTıraş Splash Screen bileşeninde (components/ui/splash-screen.tsx) aşağıdaki görsel düzenlemeleri yapmanı istiyorum:
+
+1. İLERLEME ÇUBUĞUNU (PROGRESS BAR) KALDIR:
+   - "HemenTıraş" yazısının altında yer alan alttaki yeşil dolgu çubuğunu (progress bar div'ini) tamamen bileşenden kaldır.
+
+2. LOGONUN ARKASINDAKİ DALGALARI BEYAZ/MONOKROM YAP (WHITE RIPPLE EFEKTİ):
+   - Dalga/sonar halkalarını yeşil renkten çıkarıp tamamen monokrom, beyaz ve transparan gri tonlara dönüştür.
+   - Dalgalar logonun arkasından dışarı doğru büyüyerek yumuşakça kaybolsun:
+     * 1. Dalga: border border-white/20 bg-white/5
+     * 2. Dalga: border border-white/10 bg-white/5
+     * 3. Dalga: border border-zinc-700/50
+   - Logonun arkasında yeşil glow yerine hafif yumuşak beyaz bir parılama (`bg-white/10 blur-2xl`) bulunsun.
+
+3. YAZI STİLİ VE ORTALAMA:
+   - "HemenTıraş" marka isminde 'Hemen' kısmı mat beyaz, 'Tıraş' kısmı ise yüksek kontrastlı parlak beyaz (#FFFFFF) veya çok hafif zinc-300 tonunda kalsın.
+
+Lütfen progress bar'ı kaldırılmış, beyaz/monokrom sonar dalga efektlerine sahip güncellenmiş SplashScreen React bileşenini ve CSS kodlarını üret.
+
+HemenTıraş projesinde Ana Sayfa (Index / Header) üzerinden erişilebilen Profil Yönetimi, Hızlı Ayarlar Dropdown Menüsü ve Anlık Randevu Bildirim Sistemini koda entegre etmeni istiyorum.
+
+Teknoloji Stack'i: Next.js 14+ (App Router), TypeScript, Tailwind CSS, Lucide React, Radix UI / Shadcn UI Dropdown.
+
+Geliştirilecek Yapı ve Mantık:
+
+1. HEADER KULLANICI AÇILIR MENÜSÜ (HEADER USER DROPDOWN):
+   - Sağ üst köşede kullanıcının avatarı ve adı yer alsın. Tıklandığında aşağıya doğru şık bir karanlık tema (zinc-900 border-zinc-800) dropdown menü açılsın.
+   - Dropdown Menü İçeriği:
+     * Üst Bitişik Alan: Profil Fotoğrafı, Ad Soyad, E-posta adresi.
+     * Hızlı Bilgi Düzenleme Modalı / Linki: "Profilimi Düzenle" (Tıklandığında ya hızlı düzenleme modalı açılsın ya da `/profile` sayfasına yönlendirsin).
+     * "Randevularım" (`/my-appointments`) - Yaklaşan randevu sayısı rozeti (badge) ile.
+     * "Bildirimler" (`/notifications`) - Aktif/Okunmamış bildirim sayısı.
+     * Ayrıştırıcı çizgi (Divider) sonrası "Çıkış Yap" (Sign Out) butonu.
+
+2. AÇILIR EKANDAN / MODAL'DAN HIZLI PROFİL GÜNCELLEME:
+   - Kullanıcı ana sayfadan ayrılmadan "Hızlı Profil Düzenle"ye tıkladığında bir Sheet / Modal açılsın:
+     * Ad Soyad, Telefon Numarası, Profil Fotoğrafı değiştirme alanları.
+     * Form gönderildiğinde `PUT /api/user/profile` endpoint'ine istek atılsın.
+     * Değişiklikler kaydedildiğinde `useSession().update()` çağrılarak Header'daki isim ve avatar sayfa yenilenmeden anında güncellensin.
+
+3. RANDEVUSU GELDİĞİNDE ANLIK BİLDİRİM SİSTEMİ (APPOINTMENT REMINDER NOTIFICATION):
+   - Müşterinin onaylanmış bir randevusuna az bir süre kaldığında (örneğin 1 saat veya randevu saati geldiğinde):
+     * Header'daki Zil / Profil İkonu üzerinde yeşil/kırmızı yanıp sönen (pulse) bir bildirim rozeti (notification badge) belirsin.
+     * Ekranın sağ üst köşesinde toast bildirimi fırlatılsın: "Randevu Zamanı! Bugün saat [14:30]'da [Dükkan Adı] berberinde randevunuz var."
+     * Bu kontrol `useEffect` içinde periyodik olarak `GET /api/user/active-appointments` endpoint'ini polleyerek (veya WebSocket/Reverb ile) yapılsın.
+
+4. BİLDİRİM AÇILIR PANELİ (NOTIFICATION DROPDOWN):
+   - Zil ikonuna tıklandığında son gelen randevu durum güncellemeleri (Onaylandı, Yaklaşıyor, Tamamlandı) tarih sırasıyla listelensin.
+
+Lütfen bu Header Kullanıcı Dropdown bileşenini (`components/header/user-dropdown.tsx`), Hızlı Profil Düzenleme Modalı (`components/profile/edit-profile-modal.tsx`) ve Randevu Bildirim Dinleyicisini (`components/providers/notification-provider.tsx`) içeren tam TypeScript/React kodlarını üret.
